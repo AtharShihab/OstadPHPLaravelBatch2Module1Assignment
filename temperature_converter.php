@@ -45,22 +45,26 @@
         $convDirectionFrom = $_POST["convDirectionFrom"];
         $convDirectionTo = $_POST["convDirectionTo"];
 
-        $isCelsiusToFahrenheit = ($temperature != null && $temperature != "") && $convDirectionFrom == "Celsius" && $convDirectionTo == "Fahrenheit";
-        $isFahrenheitToCelsius = ($temperature != null && $temperature != "") && $convDirectionFrom == "Fahrenheit" && $convDirectionTo == "Celsius";
+        if (is_numeric($temperature)) {
+            $isCelsiusToFahrenheit = $convDirectionFrom == "Celsius" && $convDirectionTo == "Fahrenheit";
+            $isFahrenheitToCelsius = $convDirectionFrom == "Fahrenheit" && $convDirectionTo == "Celsius";
 
-        $isCelsiusToCelsius = ($temperature != null && $temperature != "") && $convDirectionFrom == "Celsius" && $convDirectionTo == "Celsius";
-        $isFahrenheitToFahrenheit = ($temperature != null && $temperature != "") && $convDirectionFrom == "Fahrenheit" && $convDirectionTo == "Fahrenheit";
+            $isCelsiusToCelsius = $convDirectionFrom == "Celsius" && $convDirectionTo == "Celsius";
+            $isFahrenheitToFahrenheit = $convDirectionFrom == "Fahrenheit" && $convDirectionTo == "Fahrenheit";
 
-        if ($isCelsiusToFahrenheit) {
-            $result = ($temperature * 9 / 5) + 32;
-            echo '<div class="container"><div class="alert alert-success"> ' . $temperature . '°C is ' . $result . '°F </div></div>';
-        } elseif ($isFahrenheitToCelsius) {
-            $result = ($temperature - 32) * 5 / 9;
-            echo '<div class="container"><div class="alert alert-success"> ' . $temperature . '°F is ' . $result . '°C </div></div>';
-        } else if ($isCelsiusToCelsius) {
-            echo '<div class="container"><div class="alert alert-success"> ' . $temperature . '°C is ' . $temperature . '°C </div></div>';
-        } else if ($isFahrenheitToFahrenheit) {
-            echo '<div class="container"><div class="alert alert-success"> ' . $temperature . '°F is ' . $temperature . '°F </div></div>';
+            if ($isCelsiusToFahrenheit) {
+                $result = ($temperature * 9 / 5) + 32;
+                echo '<div class="container"><div class="alert alert-success"> ' . $temperature . '°C is ' . $result . '°F </div></div>';
+            } else if ($isFahrenheitToCelsius) {
+                $result = ($temperature - 32) * 5 / 9;
+                echo '<div class="container"><div class="alert alert-success"> ' . $temperature . '°F is ' . $result . '°C </div></div>';
+            } else if ($isCelsiusToCelsius) {
+                echo '<div class="container"><div class="alert alert-success"> ' . $temperature . '°C is ' . $temperature . '°C </div></div>';
+            } else if ($isFahrenheitToFahrenheit) {
+                echo '<div class="container"><div class="alert alert-success"> ' . $temperature . '°F is ' . $temperature . '°F </div></div>';
+            } else {
+                echo '<div class="container"><div class="alert alert-danger">Invalid conversion parameters</div></div>';
+            }
         } else {
             echo '<div class="container"><div class="alert alert-danger">Invalid conversion parameters</div></div>';
         }
